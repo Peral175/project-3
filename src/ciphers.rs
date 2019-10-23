@@ -200,7 +200,7 @@ pub mod old_ciphers{
                         alphabet = alphabet_upper;
                     }
                     let x = alphabet.chars().position(|p| i == p).unwrap();
-                    let idx: usize = (x - next) % 26;
+                    let idx: usize = (x + 26 - next) % 26;
                     let err_s = format!("No element at index {}", idx);
                     let y = alphabet.chars().nth(idx).expect(&err_s);
 
