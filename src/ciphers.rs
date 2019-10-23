@@ -1,6 +1,6 @@
 pub mod old_ciphers{
     pub mod caesar_cipher{
-        pub fn encrypt_caes(msg: &str, sec: String, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
+        pub fn encrypt_caes(msg: &str, sec: &str, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
             let mut shift: u32 = sec.parse().unwrap();
             shift = shift % 26;
             let mut result: String = String::new();
@@ -24,7 +24,7 @@ pub mod old_ciphers{
             }
             return Some(result)
         }
-        pub fn decrypt_caes(msg: &str, sec: String, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
+        pub fn decrypt_caes(msg: &str, sec: &str, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
             let mut shift: u32 = sec.parse().unwrap();
             shift = shift % 26;
             let mut result: String = String::new();
@@ -40,7 +40,7 @@ pub mod old_ciphers{
                         alphabet = alphabet_upper;
                     }
                     let x = alphabet.chars().position(|p| i == p).unwrap();
-                    let idx: usize = (x - shift as usize) % 26;
+                    let mut idx: usize = (x +26 - shift as usize) % 26;
                     let err_s = format!("No element at index {}", idx);
                     let y = alphabet.chars().nth(idx).expect(&err_s);
                     result.push(y);
@@ -50,7 +50,7 @@ pub mod old_ciphers{
         }
     }
     pub mod mono_substitution_cipher{
-        pub fn encrypt_mono(msg: &str, sec: String, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
+        pub fn encrypt_mono(msg: &str, sec: &str, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
                 let key = sec.to_lowercase();
                 let message = msg.to_lowercase();
                 let mut secret_alphabet: String = String::new();
@@ -91,7 +91,7 @@ pub mod old_ciphers{
                 }
                 return Some(result)
         }
-        pub fn decrypt_mono(msg: &str, sec: String, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
+        pub fn decrypt_mono(msg: &str, sec: &str, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
                 let key = sec.to_lowercase();
                 let message = msg.to_lowercase();
                 let mut secret_alphabet: String = String::new();
@@ -135,7 +135,7 @@ pub mod old_ciphers{
 
     }
     pub mod vigenere_cipher{
-        pub fn encrypt_vige(msg: &str, sec: String, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
+        pub fn encrypt_vige(msg: &str, sec: &str, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
             let key = sec;
             let mut result: String = String::new();
             let mut vector: Vec<usize> = Vec::new();
@@ -172,7 +172,7 @@ pub mod old_ciphers{
             }
             return Some(result)
         }
-        pub fn decrypt_vige(msg: &str, sec: String, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
+        pub fn decrypt_vige(msg: &str, sec: &str, alphabet_lower: &str, alphabet_upper: &str ) -> Option<String>{
             let key = sec;
             let mut result: String = String::new();
             let mut vector: Vec<usize> = Vec::new();

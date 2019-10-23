@@ -33,8 +33,73 @@ fn main(){
             let sec = &args[4];
             println!("{}, {}, {}, {}",msg, action, cip, sec);
 
-
-            
+            if message_check(msg) == false{
+                println!("Message can only contain 'A-Z', 'a-z', and whitespace!");
+            }
+            if action == "encrypt"{
+                if cip == "caesar"{
+                    if numbers_check(sec) == false {
+                        println!("Only numbers allowed for the shift!")
+                    }
+                    else {
+                        let r:String = ciphers::old_ciphers::caesar_cipher::encrypt_caes(msg, sec, alphabet_lower, alphabet_upper).unwrap();
+                        println!("Caesar encrypt: {}",r);
+                    }
+                }
+                else if cip == "mono"{
+                    if message_check_no_space(sec) == false {
+                        println!("Only 'A-Z','a-z' allowed!")
+                    }
+                    else {
+                        let r: String = ciphers::old_ciphers::mono_substitution_cipher::encrypt_mono(msg, sec, alphabet_lower, alphabet_upper).unwrap();
+                        println!("Mono encrypted: {}", r);
+                    }
+                }
+                else if cip == "vig"{
+                    if message_check_no_space(sec) == false {
+                        println!("Only 'A-Z','a-z' allowed!")
+                    }
+                    else {
+                        let r: String = ciphers::old_ciphers::vigenere_cipher::encrypt_vige(msg, sec, alphabet_lower, alphabet_upper).unwrap();
+                        println!("Vigenere encrypted: {}", r);
+                    }
+                }
+                else{
+                    println!("No cipher with that name exists!")
+                }
+            }
+            else if action == "decrypt"{
+                if cip == "caesar"{
+                    if numbers_check(sec) == false {
+                        println!("Only numbers allowed for the shift!")
+                    }
+                    else {
+                        let r:String = ciphers::old_ciphers::caesar_cipher::decrypt_caes(msg, sec, alphabet_lower, alphabet_upper).unwrap();
+                        println!("Caesar decrypt: {}",r);
+                    }
+                }
+                else if cip == "mono"{
+                    if message_check_no_space(sec) == false {
+                        println!("Only 'A-Z','a-z' allowed!")
+                    }
+                    else {
+                        let r: String = ciphers::old_ciphers::mono_substitution_cipher::decrypt_mono(msg, sec, alphabet_lower, alphabet_upper).unwrap();
+                        println!("Mono decrypted: {}", r);
+                    }
+                }
+                else if cip == "vig"{
+                    if message_check_no_space(sec) == false {
+                        println!("Only 'A-Z','a-z' allowed!")
+                    }
+                    else {
+                        let r: String = ciphers::old_ciphers::vigenere_cipher::decrypt_vige(msg, sec, alphabet_lower, alphabet_upper).unwrap();
+                        println!("Vigenere decrypted: {}", r);
+                    }
+                }
+                else{
+                    println!("No cipher with that name exists!")
+                }
+            }
         },
         _ => {
             println!("Invalid arguments input!\n");
