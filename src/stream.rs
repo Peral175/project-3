@@ -1,3 +1,4 @@
+
 pub mod modern_ciphers{
 
     pub fn to_binary(mut decimal: i32) -> i32{
@@ -21,19 +22,27 @@ pub mod modern_ciphers{
     }
     pub mod stream_cipher{
         pub fn encrypt_stream(msg: &str, key: &str) -> Option<String>{
-            let mut result: String = String::new();
             let msg_as_bytes = msg.as_bytes();
             let key_as_bytes = key.as_bytes();
             println!("{:?}, {:?}", msg_as_bytes, key_as_bytes);
             let mut it = key_as_bytes.iter();
-
+            let mut vec = Vec::new();
             for i in msg_as_bytes{
                 println!("{}", i);
                 let its = it.next().unwrap();
                 println!("{:?}",its);
                 let mut res = i ^ its;
-                println!("A: {:?}", res);
-                result.push(res);
+                println!("R: {:?}, {:b}", res, res);
+                vec.push(res);
+
+            }
+            println!("{:?}",vec);
+            let mut result = String::new();
+            for i in vec{
+                println!("{}, {:b}",i, i);
+                let x = i as char;
+                println!("{:?}, {:b}",x, i);
+                result.push(x);
             }
             return Some(result)
         }
