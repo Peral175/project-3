@@ -32,6 +32,9 @@ fn main(){
             let cip = &args[3].to_lowercase();
             let sec = &args[4];
             println!("{}, {}, {}, {}",msg, action, cip, sec);
+
+
+            
         },
         _ => {
             println!("Invalid arguments input!\n");
@@ -39,4 +42,28 @@ fn main(){
         }
 
     }
+}
+fn message_check(input: &str) -> bool{
+    for i in input.chars(){
+        if (i.is_ascii_alphabetic() == false) && (i.is_whitespace() == false){
+            return false
+        }
+    }
+    return true
+}
+fn message_check_no_space(input: &str) -> bool{
+    for i in input.chars(){
+        if i.is_ascii_alphabetic() == false{
+            return false
+        }
+    }
+    return true
+}
+fn numbers_check(input: &str) -> bool{
+    for i in input.chars(){
+        if i.is_ascii_alphanumeric() == false{
+            return false
+        }
+    }
+    return true
 }
