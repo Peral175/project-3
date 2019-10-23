@@ -1,25 +1,28 @@
 use std::env;
 mod ciphers;
+mod stream;
 fn help(){
     println!("This is the command line interface for old ciphers.
     \nTo operate it, enter:
-    \n\n'cargo run -- <'Message to be encrypted'> <Encrypt or Decrypt> <Cipher of your choice><Secondary information according to cipher:
+    \n\n'cargo run -- <'Message to be encrypted'> <Encrypt or Decrypt> <Cipher of your choice><Secondary information according to cipher: '>
     \nCaesar: Shift as integer
-    \nMono & Vigenere: Key with only letters
-    \n>'");
+    \nMono & Vigenere: Key with only letters");
 }
 fn main(){
     let alphabet_lower: &str = "abcdefghijklmnopqrstuvwxyz";
     let alphabet_upper: &str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    //check if message and key are only ASCII A-Z
-    //check if Integer for caesar
     let args: Vec<String> = env::args().collect();
     match args.len() {
         1 => {
-            //a length of 1 means no arguments were passed
-            //other than the path
-            println!("No arguments were passed! \n");
+            println!("No arguments were passed.\n");
             help();
+        },
+        2 => {
+            println!("Streamcipher: \n");
+            let msg = "abc";
+            let key = "key";
+            let r: String = stream::modern_ciphers::stream_cipher::encrypt_stream(msg,key).unwrap();
+            println!("Stream cipher: {}", r);
         },
         5 => {
             //1. path
