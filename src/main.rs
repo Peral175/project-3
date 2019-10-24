@@ -19,7 +19,8 @@ fn main(){
         },
         2 => {
             println!("Streamcipher: \n");
-            let msg = "!!!!";
+            //let msg = "!!!!";
+            let msg = "@CBE";
             let key = "abcd";
             let r: String = stream::modern_ciphers::stream_cipher::encrypt_stream(msg,key).unwrap();
             println!("Stream cipher: {}", r);

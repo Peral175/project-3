@@ -24,26 +24,51 @@ pub mod modern_ciphers{
         pub fn encrypt_stream(msg: &str, key: &str) -> Option<String>{
             let msg_as_bytes = msg.as_bytes();
             let key_as_bytes = key.as_bytes();
-            println!("{:?}, {:?}", msg_as_bytes, key_as_bytes);
-            let mut it = key_as_bytes.iter();
             let mut vec = Vec::new();
-            for i in msg_as_bytes{
-                println!("{}", i);
-                let its = it.next().unwrap();
-                println!("{:?}",its);
-                let mut res = i ^ its;
-                println!("R: {:?}, {:b}", res, res);
-                vec.push(res);
+            println!("Arrays as decimal: {:?}, {:?}", msg_as_bytes, key_as_bytes);
 
+            let mut v = Vec::new();
+            let mut w = Vec::new();
+            for i in msg_as_bytes{
+                let x = crate::stream::modern_ciphers::to_binary(*i as i32);
+                v.push(x);
+            }
+
+            for i in key_as_bytes{
+                let y = crate::stream::modern_ciphers::to_binary(*i as i32);
+                w.push(y);
+            }
+            println!("Arrays as binary: {:?} {:?}", v, w);
+            for i in 0..msg_as_bytes.len(){
+                println!("i: {}",i);
+                let res = msg_as_bytes[i] ^ key_as_bytes[i];
+                println!("XOR: {:?}\nNew bit: {:b}",res, res);
+                vec.push(res);
             }
             println!("{:?}",vec);
             let mut result = String::new();
             for i in vec{
-                println!("{}, {:b}",i, i);
-                let x = i as char;
-                println!("{:?}, {:b}",x, i);
-                result.push(x);
+                result.push((i as char));
             }
+        //     let mut it = key_as_bytes.iter();
+        //     let mut vec = Vec::new();
+        //     for i in msg_as_bytes{
+        //         println!("{}", i);
+        //         let its = it.next().unwrap();
+        //         println!("{:?}",its);
+        //         let mut res = i ^ its;
+        //         println!("R: {:?}, {:b}", res, res);
+        //         vec.push(res);
+        //
+        //     }
+        //     println!("{:?}",vec);
+        //     let mut result = String::new();
+        //     for i in vec{
+        //         println!("{}, {:b}",i, i);
+        //         let x = i as char;
+        //         println!("{:?}, {:b}",x, i);
+        //         result.push(x);
+        //     }
             return Some(result)
         }
         pub fn decrypt_stream(){}
