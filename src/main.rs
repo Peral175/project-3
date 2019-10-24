@@ -23,7 +23,9 @@ fn main(){
             let msg = "@CBE";
             let key = "abcd";
             let r: String = stream::modern_ciphers::stream_cipher::encrypt_stream(msg,key).unwrap();
-            println!("Stream cipher: {}", r);
+            println!("Stream cipher encrypt: {}", r);
+            let re: String = stream::modern_ciphers::stream_cipher::encrypt_stream(&r,key).unwrap();
+            println!("Stream cipher decrypt: {}", re);
         },
         5 => {
             //1. path

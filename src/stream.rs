@@ -48,7 +48,7 @@ pub mod modern_ciphers{
             println!("{:?}",vec);
             let mut result = String::new();
             for i in vec{
-                result.push((i as char));
+                result.push(i as char);
             }
         //     let mut it = key_as_bytes.iter();
         //     let mut vec = Vec::new();
@@ -71,7 +71,7 @@ pub mod modern_ciphers{
         //     }
             return Some(result)
         }
-        pub fn decrypt_stream(){}
+        //pub fn decrypt_stream(){}
     }
     pub mod block_cipher{}
 }
