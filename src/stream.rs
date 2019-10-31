@@ -108,7 +108,7 @@ pub mod modern_ciphers{
 
         }
         pub fn decrypt_stream(msg_de: &str, contents: &str) -> std::io::Result<()>{
-
+            let mut result_string: String = String::new();
             println!("Key: \n{}",contents);
             let contents_byte = contents.as_bytes();
             let message = fs::read_to_string(msg_de).expect("Something went wrong!");
@@ -120,9 +120,10 @@ pub mod modern_ciphers{
                 //let res = msg_as_bytes[i] ^ contents_byte[i];
                 let z = it.next().unwrap();
                 let res = msg_as_bytes[i] ^ z;
+                result_string.push(res as char);
                 let a = file.write_all(&[res]);
-
             }
+            println!("Text: \n{}",result_string);
             Ok(())
         }
     }
