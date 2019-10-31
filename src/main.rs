@@ -1,6 +1,11 @@
 use std::env;
 mod ciphers;
 mod stream;
+
+use std::fs;
+use std::io::prelude::*;
+
+
 fn help(){
     println!("This is the command line interface for old ciphers.
     \nTo operate it, enter:
@@ -17,15 +22,29 @@ fn main(){
             println!("No arguments were passed.\n");
             help();
         },
-        2 => {
+        4 => {
             println!("Streamcipher: \n");
-            //let msg = "!!!!";
-            let msg = "@CBE";
-            let key = "abcd";
-            let r: String = stream::modern_ciphers::stream_cipher::encrypt_stream(msg,key).unwrap();
-            println!("Stream cipher encrypt: {}", r);
-            let re: String = stream::modern_ciphers::stream_cipher::encrypt_stream(&r,key).unwrap();
-            println!("Stream cipher decrypt: {}", re);
+            let msg     = &args[1];
+            let option  = &args[2].to_lowercase();
+            let input   = &args[3];
+            let content = input;
+            if option == "file"{
+                let content_2 = &fs::read_to_string(input).expect("Something went wrong!");
+                let r  = stream::modern_ciphers::stream_cipher::encrypt_stream(msg, content_2).unwrap();
+                let re = stream::modern_ciphers::stream_cipher::decrypt_stream(&r,content_2).unwrap();
+            }else if option == "user_input"{
+                let r  = stream::modern_ciphers::stream_cipher::encrypt_stream(msg, content).unwrap();
+                let re = stream::modern_ciphers::stream_cipher::decrypt_stream(&r,content).unwrap();
+            }
+
+            // let msg = "Hello there! General Kenoby?";
+            // let key = "alex.txt";
+            // stream::modern_ciphers::stream_cipher::encrypt_stream(msg,key).unwrap();
+            // stream::modern_ciphers::stream_cipher::decrypt_stream(&"blabla.txt",key).unwrap();
+            //let r: String = stream::modern_ciphers::stream_cipher::encrypt_stream(msg,key).unwrap();
+            //println!("Stream cipher encrypt: {}", r);
+            //let re: String = stream::modern_ciphers::stream_cipher::decrypt_stream(&"blabs.txt",key).unwrap();
+            //println!("Stream cipher decrypt: {}", re);
         },
         5 => {
             //1. path
@@ -97,7 +116,7 @@ fn message_check_no_space(input: &str) -> bool{
 }
 fn numbers_check(input: &str) -> bool{
     for i in input.chars(){
-        if i.is_ascii_alphanumeric() == false{
+        if i.is_ascii_digit() == false{
             return false
         }
     }
