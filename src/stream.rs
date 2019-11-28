@@ -91,7 +91,7 @@ pub mod modern_ciphers{
             println!("{:?}",content_byte);
             let msg_as_bytes = msg.as_bytes();
             println!("{:?} {}", msg_as_bytes, msg_as_bytes.len());
-            let filename = "file01.txt";
+            let filename = "encrypt.txt";
             let mut file = fs::File::create(filename)?;
 
 
@@ -113,7 +113,7 @@ pub mod modern_ciphers{
             let contents_byte = contents.as_bytes();
             let message = fs::read_to_string(msg_de).expect("Something went wrong!");
             let msg_as_bytes = message.as_bytes();
-            let filename = "file02.txt";
+            let filename = "decrypt.txt";
             let mut file = fs::File::create(filename)?;
             let mut it = contents_byte.iter().cycle();
             for i in 0..msg_as_bytes.len(){
