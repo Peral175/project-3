@@ -29,11 +29,30 @@ fn main(){
 // 1 = True
 //this would still need the dissassembling of bytes into bits
             let msg = &args[1];
-            let sess_key = &args[2];
-            // let mut sk:[u8;64] = [Default::default();64];
-            // bla.iter().zip(sk.iter_mut()).map(|(&bla, sk)| *sk = bla).count();
-            let frame_counter:[u8;22] = [1,1,1,0,1,0,1,0,1,1,0,0,1,1,1,1,0,0,1,0,1,1];
-            println!("{:?},{:?},{:?}",msg,sess_key,frame_counter);
+            let mess = msg.as_bytes();
+            let message = mess.to_vec();
+            println!("{:?},\n{:?}, {:?}",msg,message,message.len());
+            let messagex: Vec<u8>;
+            if message.len() > 28{
+                messagex = message[0..28].to_vec();
+                println!("{:?}",messagex);
+                let messagey = &message[28..];
+            }
+            else{
+                messagex = message;
+            }
+//like last proj cut every time too long
+
+
+
+
+            let sess_key = (&args[2]).as_bytes();
+            let bla = ciphers::modern_ciphers::stream_cipher::binary(sess_key);
+            let mut sk:[u8;64] = [Default::default();64];
+            bla.iter().zip(sk.iter_mut()).map(|(&bla, sk)| *sk = bla).count();
+            let frame:[u8;22] = [1,1,1,0,1,0,1,0,1,1,0,0,1,1,1,1,0,0,1,0,1,1];
+            //Frame increment??
+            println!("{:?},{:?},{:?}",msg,sess_key,frame);
             // let a = &[2];
             // let b = ciphers::modern_ciphers::stream_cipher::binary(a);
             // println!("{:?}",b);
@@ -44,6 +63,22 @@ fn main(){
 //revisit types used
 //revisit binary
 //memory bittest maybe
+            let (reg1,reg2,reg3) = ciphers::modern_ciphers::stream_cipher::step1(sk);
+            println!("{:?}\n{:?}\n{:?}\n",reg1,reg2,reg3);
+            let (reg1,reg2,reg3) = ciphers::modern_ciphers::stream_cipher::step2(frame,reg1,reg2,reg3);
+            println!("{:?}\n{:?}\n{:?}\n",reg1,reg2,reg3);
+            let (reg1,reg2,reg3) = ciphers::modern_ciphers::stream_cipher::step3(reg1,reg2,reg3);
+            println!("{:?}\n{:?}\n{:?}\n",reg1,reg2,reg3);
+            let keystream = ciphers::modern_ciphers::stream_cipher::step4(reg1,reg2,reg3);
+            println!("{:?}\n {}",keystream,keystream.len());
+            let KEY = keystream.clone();
+            let encrypted_mess = ciphers::modern_ciphers::stream_cipher::stream(messagex,keystream);
+            println!("{:?}",encrypted_mess);
+            let ENCR = encrypted_mess.clone();
+            let Write = ciphers::modern_ciphers::stream_cipher::write_file(encrypted_mess);
+            let decrypted_mess = ciphers::modern_ciphers::stream_cipher::stream(ENCR,KEY);
+            let WRITE = ciphers::modern_ciphers::stream_cipher::write_file_2(decrypted_mess);
+
 
             // let (a,b,c) = ciphers::modern_ciphers::stream_cipher::init();
             // // println!("{:?},\n{:?},\n{:?}",a,b,c);
