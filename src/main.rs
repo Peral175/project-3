@@ -78,34 +78,77 @@ fn selection(structure:CipherStruct){
     let cipher_secondary = structure.struct_cipher_secondary;
     let file = structure.struct_file;
     if      action == 0 && cipher == 0  {
-
+        //encrypt caes
         // cipher_functions::old_ciphers::caesar::caesar_encrypt();     .unwrap()   insert message/file and sec
+        if numbers_check(&cipher_secondary) == false{
+            println!("Secondary input for caesar is invalid!");
+            panic!();
+        }
+        else {
+        }
     }
     else if action == 1 && cipher == 0  {
+        //decrypt caes
+        if numbers_check(&cipher_secondary) == false{
+            println!("Secondary input for caesar is invalid!");
+            panic!();
+        }
+        else {
 
+        }
     }
     else if action == 0 && cipher == 1  {
+        //encrypt mono
+        if message_check_no_space(&cipher_secondary) == false{
+            println!("Secondary input for Monoalphabetic cipher is invalid!");
+            panic!();
+        }
+        else {
 
+        }
     }
     else if action == 1 && cipher == 1  {
+        //decrypt  mono
+        if message_check_no_space(&cipher_secondary) == false{
+            println!("Secondary input for Monoalphabetic cipher is invalid!");
+            panic!();
+        }
+        else {
 
+        }
     }
     else if action == 0 && cipher == 2  {
+        //encrypt vigenere
+        if message_check_no_space(&cipher_secondary) == false{
+            println!("Secondary input for Vigenere is invalid!");
+            panic!();
+        }
+        else {
 
+        }
     }
     else if action == 1 && cipher == 2  {
+        //decrypt vigenere
+        if message_check_no_space(&cipher_secondary) == false{
+            println!("Secondary input for Vigenere cipher is invalid!");
+            panic!();
+        }
+        else {
 
+        }
     }
     else if action == 0 && cipher == 3  {
+        //encrypt stream
 
     }
     else if action == 1 && cipher == 3  {
-
+        //decrypt stream
     }
-    else{
-        println!("Invalid input!");
-    }
+}
+fn reading_file(file_name: String){
 
+}
+fn writiting_file(){
 
 }
 fn message_check(input: &str) -> bool{
@@ -126,7 +169,7 @@ fn message_check_no_space(input: &str) -> bool{
 }
 fn numbers_check(input: &str) -> bool{
     for i in input.chars(){
-        if i.is_ascii_alphanumeric() == false{
+        if i.is_ascii_digit() == false{
             return false
         }
     }
@@ -134,7 +177,7 @@ fn numbers_check(input: &str) -> bool{
 }
 fn initial_message(){
     println!("Message encryptor/decryptor using a command line interface.
-    \nUsage:       cargo run -- [encrypt/decrypt] [cipher] [filename]");
+    \nUsage:       cargo run -- [encrypt/decrypt] [cipher] [cipher specific secondary input] [filename]");
 }
 /*Everything in functions
 buffer read write
